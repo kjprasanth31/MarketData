@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("line-chart.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("nlog.config")]
 
 

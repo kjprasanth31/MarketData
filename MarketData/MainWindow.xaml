@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MarketData"
         mc:Ignorable="d"
-        Title="MarketData" Height="350" Width="525" Background="DarkGray" Icon="line-chart.ico">
+        Title="MarketData" 
+        Height="525" 
+        Width="870" 
+        Background="DarkGray" 
+        Icon="line-chart.ico" 
+        WindowStartupLocation="CenterOwner" 
+        WindowState="Normal"
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" 
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}" > 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="20" Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Background="LightGray">
+            <Menu VerticalAlignment="Center" DockPanel.Dock="Left" Background="Transparent">
+                <MenuItem Header="Market">
+                    <MenuItem Header="FX" />
+                    <MenuItem Header="Stock" />
+                </MenuItem>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                <MenuItem Header="Tools">
+                    <MenuItem Header="Zoom"/>
+                </MenuItem>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                <MenuItem Header="Settings">
+                    <MenuItem Header="Set"/>
+                </MenuItem>
+            </Menu>
+            <Menu HorizontalAlignment="Right" VerticalAlignment="Center" DockPanel.Dock="Right" Background="Transparent">
+                <MenuItem Header="*" HorizontalAlignment="Right">
+                    <MenuItem Header="View Logs"/>
+                    <MenuItem Header="Open Log Folder"/>
+                    <MenuItem Header="Save"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <TextBlock Text="Some Control" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
 </Window>
