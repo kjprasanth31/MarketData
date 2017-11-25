@@ -38,10 +38,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.5.3.1\lib\net45\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.2.0.1\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.0.0-beta11\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.0.0.269, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.0.0.269-pre\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.0.0.269, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.0.0.269-pre\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.0.0.269, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.0.0.269-pre\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -50,6 +59,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.0.0.269-pre\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
