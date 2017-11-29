@@ -8,14 +8,13 @@ namespace WindowHelper
 {
     public class WindowBuilderService : IWindowBuilderService
     {
-        private Window _window;
         private object _dataContext;
         public string _title;
         private object _userControl;
 
-        public IWindowBuilderService DataContext(object context)
+        public IWindowBuilderService DataContext(object dataContext)
         {
-            _dataContext = context;
+            _dataContext = dataContext;
             return this;
         }
 
@@ -33,20 +32,20 @@ namespace WindowHelper
 
         public void Show()
         {
-            _window = new Window
+            var window = new Window
             {
                 DataContext = _dataContext,
                 Title = _title?? "** Add Title **"
             };
 
             var iconUri = new Uri("pack://application:,,,/line-chart.ico", UriKind.RelativeOrAbsolute);
-            _window.Icon = BitmapFrame.Create(iconUri); ;
-            _window.Height = 375;
-            _window.Width = 567;
-            _window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            _window.Background = Brushes.DarkGray;
-            _window.Content = _userControl;
-            _window.Show();
+            window.Icon = BitmapFrame.Create(iconUri);
+            window.Height = 375;
+            window.Width = 567;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.Background = Brushes.DarkGray;
+            window.Content = _userControl;
+            window.Show();
         }
     }
 

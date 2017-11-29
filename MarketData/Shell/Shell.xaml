@@ -6,6 +6,9 @@
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="20" Height="Auto"/>
@@ -14,16 +17,16 @@
         <DockPanel Grid.Row="0" Background="LightGray">
             <Menu VerticalAlignment="Center" DockPanel.Dock="Left" Background="Transparent">
                 <MenuItem Header="Market">
-                    <MenuItem Header="FX" Command="{Binding NewWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-                    <MenuItem Header="Stock" Command="{Binding NewWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                    <MenuItem Header="FX" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                    <MenuItem Header="Stock" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                </MenuItem>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                <MenuItem Header="Editor">
+                    <MenuItem Header="Edit" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                 </MenuItem>
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
                 <MenuItem Header="Tools">
                     <MenuItem Header="Zoom" />
-                </MenuItem>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-                <MenuItem Header="Settings">
-                    <MenuItem Header="Set" Command="{Binding NewWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                 </MenuItem>
             </Menu>
             <Menu HorizontalAlignment="Right" VerticalAlignment="Center" DockPanel.Dock="Right" Background="Transparent">
@@ -66,10 +69,36 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <!--<TextBlock Text="Add window" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
-        <xcad:DockingManager Grid.Row="1" x:Name="MyDockingManager"  
+        <xcad:DockingManager Grid.Row="1" x:Name="MyDockingManager" 
                            AllowMixedOrientation="True"
                            BorderBrush="DarkGray"
-                           BorderThickness="1" />
+                           BorderThickness="2">
+            <xcad:DockingManager.Resources>
+                <Style TargetType="{x:Type xcad:LayoutGridResizerControl}">
+                    <Setter Property="MaxWidth" Value="2"/>
+                </Style>
+                <Style TargetType="{x:Type xcad:LayoutAnchorableControl}">
+                    <Setter Property="BorderBrush" Value="SlateGray"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Margin" Value="1"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+                <Style TargetType="{x:Type xcad:AnchorablePaneTitle}">
+                    <Setter Property="Background" Value="White"/>
+                </Style>
+                
+                <Style x:Key="LayoutStyle" TargetType="{x:Type xcad:LayoutAnchorablePaneControl}" BasedOn="{x:Reference LayoutAnchorablePaneControl}">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </xcad:DockingManager.Resources>
+            <xcad:DockingManager.Theme>
+                <xcad:GenericTheme/>
+            </xcad:DockingManager.Theme>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel DockWidth="*">
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
     </Grid>
 </UserControl>

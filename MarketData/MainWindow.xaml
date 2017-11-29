@@ -12,8 +12,12 @@
         Icon="line-chart.ico" 
         WindowStartupLocation="CenterOwner" 
         WindowState="Normal"
+        Padding="0"
+        Margin="0"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" 
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}" >
+    <Window.Resources>
+    </Window.Resources>
     <Window.Content>
         <MarketData:Shell/>
     </Window.Content>
