@@ -16,15 +16,18 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Background="LightGray">
             <Menu VerticalAlignment="Center" DockPanel.Dock="Left" Background="Transparent">
+                <MenuItem Header="Application" FontWeight="Bold">
+                    <MenuItem Header="About Application"/>
+                </MenuItem>
                 <MenuItem Header="Market">
                     <MenuItem Header="FX" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                     <MenuItem Header="Stock" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                 </MenuItem>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                <!--<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>-->
                 <MenuItem Header="Editor">
                     <MenuItem Header="Edit" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                 </MenuItem>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                <!--<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>-->
                 <MenuItem Header="Tools">
                     <MenuItem Header="Zoom" />
                 </MenuItem>

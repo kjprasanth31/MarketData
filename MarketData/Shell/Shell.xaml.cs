@@ -45,7 +45,7 @@ namespace MarketData
         private void CreateLayoutAnchorable(string title)
         {
             _layoutAnchorableBuilderService
-                .Title(title)
+                .Title("  " + title)
                 .DockingManager(_dockingManager)
                 .Show();
         }
