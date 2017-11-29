@@ -3,6 +3,7 @@ using Prism.Commands;
 using WindowHelper;
 using Xceed.Wpf.AvalonDock;
 using Library.WindowHelper;
+using System.Windows;
 
 namespace MarketData
 {
@@ -21,6 +22,7 @@ namespace MarketData
     public class ShellViewModel
     {
         public DelegateCommand<string> NewWindowCommand { get; set; }
+        public DelegateCommand<string> NewToolWindowCommand { get; set; }
         public DelegateCommand<string> NewLayoutAnchorable { get; set; }
     }
 
@@ -34,7 +36,8 @@ namespace MarketData
         public ShellController(DockingManager dockingManager)
         {
             ViewModel = new ShellViewModel {
-                NewWindowCommand = new DelegateCommand<string>(title => CreateNewWindow(title), _ => true),
+                NewWindowCommand = new DelegateCommand<string>((title)=> CreateNewWindow(title), _ => true),
+                NewToolWindowCommand = new DelegateCommand<string>((title) => CreateNewToolWindow(title), _ => true),
                 NewLayoutAnchorable = new DelegateCommand<string>(title => CreateLayoutAnchorable(title), _ => true)};
 
             _windowBuilderService = new WindowBuilderService();
@@ -53,6 +56,14 @@ namespace MarketData
         private void CreateNewWindow(string title)
         {
             _windowBuilderService
+                .Title(title)
+                .Show();
+        }
+
+        private void CreateNewToolWindow(string title)
+        {
+            _windowBuilderService
+                .WindoStyle(WindowStyle.ToolWindow)
                 .Title(title)
                 .Show();
         }
