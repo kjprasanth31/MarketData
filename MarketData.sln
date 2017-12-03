@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketDataService", "MarketDataService\MarketDataService.csproj", "{561FF8A9-9FC5-48FA-8581-7CBF553DC67D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketData.GUI", "MarketData.GUI\MarketData.GUI.csproj", "{66D68483-68C9-4B77-B9BC-D4A8CA399047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketDataController", "MarketDataController\MarketDataController.csproj", "{9532F38A-A601-4541-BFFC-E8D97E821E48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{561FF8A9-9FC5-48FA-8581-7CBF553DC67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561FF8A9-9FC5-48FA-8581-7CBF553DC67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561FF8A9-9FC5-48FA-8581-7CBF553DC67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D68483-68C9-4B77-B9BC-D4A8CA399047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D68483-68C9-4B77-B9BC-D4A8CA399047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D68483-68C9-4B77-B9BC-D4A8CA399047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D68483-68C9-4B77-B9BC-D4A8CA399047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9532F38A-A601-4541-BFFC-E8D97E821E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9532F38A-A601-4541-BFFC-E8D97E821E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9532F38A-A601-4541-BFFC-E8D97E821E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9532F38A-A601-4541-BFFC-E8D97E821E48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

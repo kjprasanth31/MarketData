@@ -238,6 +238,14 @@
       <Project>{d71e2c41-5da2-4ccc-9569-107f1986a0d5}</Project>
       <Name>Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketData.GUI\MarketData.GUI.csproj">
+      <Project>{66d68483-68c9-4b77-b9bc-d4a8ca399047}</Project>
+      <Name>MarketData.GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketDataController\MarketDataController.csproj">
+      <Project>{9532f38a-a601-4541-bffc-e8d97e821e48}</Project>
+      <Name>MarketDataController</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

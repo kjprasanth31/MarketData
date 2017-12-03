@@ -64,9 +64,10 @@
                             </Path.Triggers>
                         </Path>
                     </MenuItem.Icon>
-                    <MenuItem Header="View Logs"/>
-                    <MenuItem Header="Open Log Folder"/>
-                    <MenuItem Header="Save"/>
+                    <MenuItem Header="View Logs" Command="{Binding OpenLogFileCommand}"/>
+                    <MenuItem Header="Open Log Folder" Command="{Binding OpenLogFolderCommand}"/>
+                    <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
+                    <MenuItem Header="Restart" Command="{Binding RestartCommand}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -88,7 +89,7 @@
                     <Setter Property="Background" Value="White"/>
                 </Style>
                 
-                <Style x:Key="LayoutStyle" TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
+                <Style TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
                     <Setter Property="Padding" Value="0"/>
                     <Setter Property="Margin" Value="0"/>
                 </Style>

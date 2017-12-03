@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 
-namespace WindowHelper
+namespace Library.WindowHelper
 {
     public class WindowBuilderService : IWindowBuilderService
     {
@@ -41,7 +41,7 @@ namespace WindowHelper
 
             var iconUri = new Uri("pack://application:,,,/line-chart.ico", UriKind.RelativeOrAbsolute);
 
-            if (!(_style == WindowStyle.ToolWindow))
+            if (_style != WindowStyle.ToolWindow)
                 window.Icon = BitmapFrame.Create(iconUri);
 
             window.Height = 375;
@@ -49,7 +49,7 @@ namespace WindowHelper
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.Background = Brushes.DarkGray;
             window.Content = _userControl;
-            window.WindowStyle = _style.HasValue ? _style.Value : WindowStyle.SingleBorderWindow;
+            window.WindowStyle = _style ?? WindowStyle.SingleBorderWindow;
             window.BorderBrush = Brushes.SlateGray;
             window.BorderThickness = new Thickness(1,0,1,1);
             window.Show();
@@ -69,22 +69,5 @@ namespace WindowHelper
         IWindowBuilderService View(UserControl userControl);
         IWindowBuilderService WindoStyle(WindowStyle? style);
         void Show();
-    }
-
-    public class MayBe<T>
-    {
-        T _value;
-        public MayBe(T value)
-        {
-            _value = value;
-        }
-
-        public T Value()
-        {
-            if (_value == null)
-                return default(T);
-
-            return _value;
-        }
     }
 }
