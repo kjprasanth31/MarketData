@@ -116,7 +116,8 @@ namespace MarketData
 
         private void Initialise()
         {
-           _layoutSerializer.Deserialize(UserConfigFileName);
+            if(File.Exists(UserConfigFileName))
+                _layoutSerializer.Deserialize(UserConfigFileName);
         }
 
         private void Save()

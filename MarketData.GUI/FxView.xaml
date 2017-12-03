@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="FxControl">
     <UserControl.Resources>
@@ -16,14 +17,14 @@
         </Grid.ColumnDefinitions>
 
         <DataGrid Name="FxDataGrid" DockPanel.Dock="Left" Grid.Column="0" AlternationCount="2" ItemsSource="{Binding Path=FxItems}" AutoGenerateColumns="False" >
-            <i:Interaction.Behaviors>
-            </i:Interaction.Behaviors>
+            <interactivity:Interaction.Behaviors>
+            </interactivity:Interaction.Behaviors>
             <DataGrid.ContextMenu>
                 <ContextMenu >
-                    <MenuItem Header="Menu1"/>
-                    <MenuItem Header="Menu2"/>
-                    <MenuItem Header="Menu3"/>
-                    <MenuItem Header="Menu4"/>
+                    <MenuItem Header="Menu1" IsEnabled="False"/>
+                    <MenuItem Header="Menu2" IsEnabled="False"/>
+                    <MenuItem Header="Menu3" IsEnabled="False"/>
+                    <MenuItem Header="Menu4" IsEnabled="False"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
