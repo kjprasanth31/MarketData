@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="FxControl">
@@ -16,17 +15,25 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid Name="FxDataGrid" DockPanel.Dock="Left" Grid.Column="0" AlternationCount="2" ItemsSource="{Binding Path=FxItems}" AutoGenerateColumns="False" >
+        <DataGrid Name="FxDataGrid" 
+                  DockPanel.Dock="Left" 
+                  Grid.Column="0" 
+                  AlternationCount="2" 
+                  CanUserReorderColumns="True"
+                  CanUserSortColumns="True"
+                  GridLinesVisibility="Horizontal"
+                  ItemsSource="{Binding Path=FxItems}" 
+                  AutoGenerateColumns="False" >
             <interactivity:Interaction.Behaviors>
             </interactivity:Interaction.Behaviors>
-            <DataGrid.ContextMenu>
+            <!--<DataGrid.ContextMenu>
                 <ContextMenu >
                     <MenuItem Header="Menu1" IsEnabled="False"/>
                     <MenuItem Header="Menu2" IsEnabled="False"/>
                     <MenuItem Header="Menu3" IsEnabled="False"/>
                     <MenuItem Header="Menu4" IsEnabled="False"/>
                 </ContextMenu>
-            </DataGrid.ContextMenu>
+            </DataGrid.ContextMenu>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Currency 1" Binding="{Binding Currency1}"/>
@@ -36,7 +43,15 @@
             </DataGrid.Columns>
         </DataGrid>
         <Expander BorderThickness="1" BorderBrush="SlateGray" IsExpanded="false" DockPanel.Dock="Right" ExpandDirection="Left" Grid.Column="1">
-            <DataGrid Name="ColumnChooserDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding ElementName=FxDataGrid, Path=Columns}" HorizontalAlignment="Center" VerticalContentAlignment="Center" >
+            <DataGrid Name="ColumnChooserDataGrid" 
+                      AlternationCount="2" 
+                      CanUserReorderColumns="True"
+                      CanUserSortColumns="True"
+                      GridLinesVisibility="Horizontal"
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding ElementName=FxDataGrid, Path=Columns}" 
+                      HorizontalAlignment="Center" 
+                      VerticalContentAlignment="Center" >
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Select" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -44,7 +59,7 @@
                                 <CheckBox x:Name="SomeCheckBox" 
                                             HorizontalAlignment="Center" 
                                             VerticalAlignment="Center"
-                                            IsChecked="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Visibility, Converter={StaticResource  BooleanToVisibilityConverter}, FallbackValue=True}"/>
+                                            IsChecked="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=Item.Visibility, Converter={StaticResource  BooleanToVisibilityConverter}, FallbackValue=True}"/>
                             </ItemContainerTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

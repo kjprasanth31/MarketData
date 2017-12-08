@@ -1,6 +1,5 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Controls;
+using NLog;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
 
@@ -12,8 +11,12 @@ namespace Library.WindowHelper
         private object _dataContext;
         private UserControl _userControl;
         private DockingManager _dockingManager;
+        private readonly NLog.Logger _logger;
 
-
+        public LayoutAnchorableBuilderService()
+        {
+            _logger = LogManager.GetLogger(nameof(LayoutAnchorableBuilderService));
+        }
         public ILayoutAnchorableBuilderService Title(string title)
         {
             _title = title;
@@ -51,11 +54,11 @@ namespace Library.WindowHelper
                 }
                 layout.FloatingHeight = 250;
                 layout.FloatingWidth = 345;
+                _logger.Info($"Launching LayoutAnchorable Window - Type : {_userControl?.GetType()}, Title : {_title}, DataContext : {_dataContext.GetType()}");
                 layout.Float();
             }
         }
     }
-
 
     public interface ILayoutAnchorableBuilderService
     {

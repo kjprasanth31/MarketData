@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace MarketDataController
 {
     public class FxViewModel
     {
         public IEnumerable<FxItem> FxItems { get; set; }
+
+        public FxViewModel()
+        {
+            FxItems = new ObservableCollection<FxItem>();
+        }
+
         public FxViewModel(IEnumerable<FxItem> items)
         {
             FxItems = items;
