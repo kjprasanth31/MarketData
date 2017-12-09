@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using NATS.Client;
 
 namespace Library.Nats
@@ -20,7 +21,7 @@ namespace Library.Nats
         {
             try
             {
-                _connection = new ConnectionFactory().CreateConnection(CreateClientOptions("Client1"));
+                _connection = new ConnectionFactory().CreateConnection(CreateClientOptions("Client2"));
             }
             catch (Exception ex)
             {
@@ -32,7 +33,7 @@ namespace Library.Nats
         {
             var opts = ConnectionFactory.GetDefaultOptions();
             opts.Servers = _servers;
-
+            opts.AllowReconnect = true;
             opts.Name = clientName;
             opts.Secure = false;
             opts.Token = "oAtPi9GbsH_voUmR81bAnu45gJCo7jspm8ADs6";
@@ -41,14 +42,28 @@ namespace Library.Nats
 
             opts.ClosedEventHandler += (sender, args) =>
             {
-                Console.WriteLine("Client {0} CLOSED!.", clientName);
+                System.Diagnostics.Debug.WriteLine("Client {0} CLOSED!.", clientName);
             };
 
             opts.ReconnectedEventHandler += (sender, args) =>
             {
-                Console.WriteLine("Client {0} Reconnected!.", clientName);
+                System.Diagnostics.Debug.WriteLine("Client {0} Reconnected!.", clientName);
             };
 
+            opts.AsyncErrorEventHandler += (sender, args) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Client Async Error");
+            };
+
+            opts.DisconnectedEventHandler += (sender, args) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Client disconnected");
+            };
+
+            opts.ServerDiscoveredEventHandler += (sender, args) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Server disconnected" + args.Conn.State);
+            };
             return opts;
         }
 
@@ -56,12 +71,30 @@ namespace Library.Nats
         {
             var subject = new Subject<T>();
 
-            _connection.SubscribeAsync("C.*", (sender, cbArgs) =>
+            var c = _connection.SubscribeAsync("C.*", (sender, cbArgs) =>
             {
                 subject.OnNext(new T().Adapt(cbArgs.Message.Subject));
             });
-
+            c.Start();
             return subject.AsObservable();
+        }
+
+        public void REquest()
+        {
+            EventHandler<MsgHandlerEventArgs> msgHandler = (sender, cbArgs) =>
+            {
+                var l = cbArgs.Message;
+            };
+
+            using (IAsyncSubscription s = _connection.SubscribeAsync("C.*", msgHandler))
+            {
+                // Go ahead and keep a thread up for stressing the system a bit.
+                while (true)
+                {
+                    // always up
+                    Thread.Sleep(250);
+                }
+            }
         }
 
         public void Disconnect()
