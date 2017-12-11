@@ -2,3 +2,4 @@
 
 Using -
 * AvalonDock
+* LiveCharts.WPF
