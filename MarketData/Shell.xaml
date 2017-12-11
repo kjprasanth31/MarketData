@@ -70,6 +70,7 @@
                     <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
                     <MenuItem Header="Restart" Command="{Binding RestartCommand}"/>
                     <MenuItem Header="Clear user config" Command="{Binding ClearConfigCommand}"/>
+                    <MenuItem Header="Application Gauge" Command="{Binding NewLayoutAnchorable}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

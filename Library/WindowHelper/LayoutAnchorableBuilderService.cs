@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Controls;
 using NLog;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -12,6 +14,7 @@ namespace Library.WindowHelper
         private UserControl _userControl;
         private DockingManager _dockingManager;
         private readonly NLog.Logger _logger;
+        private IDisposable _disposable;
 
         public LayoutAnchorableBuilderService()
         {
@@ -34,6 +37,12 @@ namespace Library.WindowHelper
             return this;
         }
 
+        public ILayoutAnchorableBuilderService OnClosed(IDisposable disposable)
+        {
+            _disposable = disposable;
+            return this;
+        }
+
         public ILayoutAnchorableBuilderService DockingManager(DockingManager dockingManager)
         {
             _dockingManager = dockingManager;
@@ -45,6 +54,7 @@ namespace Library.WindowHelper
             if (_dockingManager != null)
             {
                 var layout = new LayoutAnchorable();
+                layout.Closing += LayoutOnClosing;
                 layout.AddToLayout(_dockingManager, AnchorableShowStrategy.Most);
                 layout.Title = _title;
                 if (_userControl != null)
@@ -54,9 +64,16 @@ namespace Library.WindowHelper
                 }
                 layout.FloatingHeight = 250;
                 layout.FloatingWidth = 345;
-                _logger.Info($"Launching LayoutAnchorable Window - Type : {_userControl?.GetType()}, Title : {_title}, DataContext : {_dataContext.GetType()}");
                 layout.Float();
+                layout.Closing += LayoutOnClosing;
+                _logger.Info($"Launching LayoutAnchorable Window - Type : {_userControl?.GetType()}, Title : {_title}, DataContext : {_dataContext?.GetType()}");
             }
+        }
+        
+
+        private void LayoutOnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            _disposable?.Dispose();
         }
     }
 
@@ -66,6 +83,7 @@ namespace Library.WindowHelper
         ILayoutAnchorableBuilderService Title(string title);
         ILayoutAnchorableBuilderService View(UserControl userControl);
         ILayoutAnchorableBuilderService DockingManager(DockingManager dockingManager);
+        ILayoutAnchorableBuilderService OnClosed(IDisposable disposable);
         void Show();
     }
 }

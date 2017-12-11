@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Windows.Controls;
 using Prism.Commands;
 using Xceed.Wpf.AvalonDock;
@@ -66,7 +67,7 @@ namespace MarketData
                 RestartCommand = new DelegateCommand(ReStart),
                 OpenFileCommand = new DelegateCommand(() => Open(OpenType.LogFile)),
                 OpenFolderCommand = new DelegateCommand(() => Open(OpenType.LogFolder)),
-                ClearConfigCommand = new DelegateCommand(ClearConfig)
+                ClearConfigCommand = new DelegateCommand(ClearConfig),
             };
 
             _windowBuilderService = new WindowBuilderService();
@@ -77,21 +78,9 @@ namespace MarketData
             _layoutSerializer.LayoutSerializationCallback += (s, e) =>
             {
                 var view = GetView(e.Model.ContentId);
-                if (view != null)
-                {
-                    view.DataContext =
-                        new FxViewModel(
-                            new[]
-                            {
-                                new FxItem("ID1", "GBP", "USD", 1.234, DateTime.Now),
-                                new FxItem("ID2", "USD", "JPY", 6.3422, DateTime.Now),
-                                new FxItem("ID3", "EUR", "GBP", 0.69, DateTime.Now)
-                            });
-                }
-
+                view.DataContext = GetDataContext(view.Name);
                 e.Content = view;
             };
-
 
             if (Application.Current.MainWindow != null)
             {
@@ -215,26 +204,52 @@ namespace MarketData
 
         private void CreateLayoutAnchorable(string title)
         {
-            var vm =
-                new FxViewModel(
-                    new[]
-                    {
-                        new FxItem("ID1", "GBP", "USD", 1.234, DateTime.Now),
-                        new FxItem("ID2", "USD", "JPY", 6.3422, DateTime.Now),
-                        new FxItem("ID3", "EUR", "GBP", 0.69, DateTime.Now)
-                    });
-            
             _layoutAnchorableBuilderService
                 .Title("  " + title)
-                .View(GetView(title))
-                .DataContext(vm)
+                .View(GetView(GetItem(title)))
+                .OnClosed(Disposable.Create(() => Console.WriteLine("Exited")))
+                .DataContext(GetDataContext(GetItem(title)))
                 .DockingManager(_dockingManager)
                 .Show();
         }
 
+        private string GetItem(string title)
+        {
+            return title.Contains("FX") ? "FxControl" : title.Contains("Gauge") ? "AngularGaugeControl" : string.Empty;
+        }
+
+        private object GetDataContext(string viewName)
+        {
+            switch (viewName)
+            {
+                case "FxControl":
+                    return
+                        new FxViewModel(
+                            new[]
+                            {
+                                new FxItem("ID1", "GBP", "USD", 1.234, DateTime.Now),
+                                new FxItem("ID2", "USD", "JPY", 6.3422, DateTime.Now),
+                                new FxItem("ID3", "EUR", "GBP", 0.69, DateTime.Now)
+                            });
+                case "AngularGaugeControl":
+                    return new AngularGaugeViewController().ViewModel;
+
+                default:
+                    return default(object);
+            }
+        }
+
         private static UserControl GetView(string item)
         {
-            return item != null && item.ToLower().Contains("fx") ? new FxView() : null;
+            switch (item)
+            {
+                case "FxControl":
+                    return new FxView();
+                case "AngularGaugeControl":
+                    return new AngularGaugeView();
+                default:
+                    return default(UserControl);
+            }
         }
 
         private void CreateNewWindow(string title)

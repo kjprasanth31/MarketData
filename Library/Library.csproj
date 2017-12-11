@@ -76,6 +76,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DisposableExtension.cs" />
+    <Compile Include="Extensions\NotificationExtensions.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Nats\NatsTransport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
