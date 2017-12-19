@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
 using MarketDataController.Annotations;
+using LiveCharts;
 
 namespace MarketDataController
 {
@@ -14,9 +15,13 @@ namespace MarketDataController
         private double _cpuUsage;
         private string _metric;
         private double _gaugeValue;
+        private SeriesCollection _seriesCollection;
+        private bool _cpuVisibility;
+        private bool _memoryVisilibity;
 
-        public AngularGaugeViewModel()
+        public AngularGaugeViewModel(SeriesCollection collection)
         {
+            _seriesCollection = collection;
         }
 
         public ObservableCollection<AngularItem> GaugeItems { get; } = new ObservableCollection<AngularItem>();
@@ -69,6 +74,29 @@ namespace MarketDataController
                 NotifyPropertyChanged(nameof(Metric));
             }
         }
+
+        public bool CpuVisibility
+        {
+            get => _cpuVisibility;
+            set
+            {
+                _cpuVisibility = value; 
+                NotifyPropertyChanged(nameof(CpuVisibility));
+            }
+        }
+
+        public bool MemoryVisibility
+        {
+            get => _memoryVisilibity;
+            set
+            {
+                _memoryVisilibity = value;
+                NotifyPropertyChanged(nameof(MemoryVisibility));
+            }
+        }
+
+        public SeriesCollection SeriesCollection { get { return _seriesCollection; } }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -79,18 +107,18 @@ namespace MarketDataController
 
     public class AngularItem : INotifyPropertyChanged
     {
-        private string _id;
+        private MetricType _id;
         private string _name;
         private readonly Func<IDisposable> _getData;
 
-        public AngularItem(string id, string name, [CanBeNull] Func<IDisposable> getData)
+        public AngularItem(MetricType id, string name, [CanBeNull] Func<IDisposable> getData)
         {
             _id = id;
             _name = name;
             _getData = getData ?? (() => Disposable.Empty);
         }
 
-        public string Id
+        public MetricType Id
         {
             get => _id;
             set

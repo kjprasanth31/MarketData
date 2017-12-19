@@ -73,5 +73,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketDataController\MarketDataController.csproj">
+      <Project>{9532F38A-A601-4541-BFFC-E8D97E821E48}</Project>
+      <Name>MarketDataController</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

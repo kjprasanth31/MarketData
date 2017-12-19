@@ -215,7 +215,7 @@ namespace MarketData
 
         private string GetItem(string title)
         {
-            return title.Contains("FX") ? "FxControl" : title.Contains("Gauge") ? "AngularGaugeControl" : string.Empty;
+            return title.Contains("FX") ? "FxControl" : title.Contains("Metric") ? "AngularGaugeControl" : string.Empty;
         }
 
         private object GetDataContext(string viewName)
