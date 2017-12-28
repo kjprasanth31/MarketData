@@ -8,6 +8,7 @@ using Prism.Commands;
 using Xceed.Wpf.AvalonDock;
 using Library.WindowHelper;
 using System.Windows;
+using Library.Nats;
 using MarketData.GUI;
 using MarketDataController;
 using NLog;
@@ -223,14 +224,8 @@ namespace MarketData
             switch (viewName)
             {
                 case "FxControl":
-                    return
-                        new FxViewModel(
-                            new[]
-                            {
-                                new FxItem("ID1", "GBP", "USD", 1.234, DateTime.Now),
-                                new FxItem("ID2", "USD", "JPY", 6.3422, DateTime.Now),
-                                new FxItem("ID3", "EUR", "GBP", 0.69, DateTime.Now)
-                            });
+                    var transport = new NatsTransport<CurrencyPairPrice>();
+                    return new FxViewController(transport).ViewModel;
                 case "AngularGaugeControl":
                     return new AngularGaugeViewController().ViewModel;
 

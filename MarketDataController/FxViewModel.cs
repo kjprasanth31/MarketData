@@ -1,21 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using MarketDataController.Annotations;
 
 namespace MarketDataController
 {
-    public class FxViewModel
+    public class FxViewModel : INotifyPropertyChanged
     {
-        public IEnumerable<FxItem> FxItems { get; set; }
+        public CurrencyPairItemCollection CurrencyPairList { get; }
+
+        private string _selectedCurrencyPair;
+
+        public string SelectedCurrencyPair
+        {
+            get => _selectedCurrencyPair;
+            set
+            {
+                _selectedCurrencyPair = value;
+                NotifyPropertyChanged(nameof(SelectedCurrencyPair));
+            }
+        }
 
         public FxViewModel()
         {
-            FxItems = new ObservableCollection<FxItem>();
+            CurrencyPairList = new CurrencyPairItemCollection();
         }
 
-        public FxViewModel(IEnumerable<FxItem> items)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            FxItems = items;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class CurrencyPairItemCollection : ObservableCollection<CurrencyPairItem>
+    {
+    }
+
+    public class CurrencyPairItem
+    {
+        public string Id { get; }
+        public string Name { get; }
+
+        public CurrencyPairItem(string id, string name)
+        {
+            Id = id;
+            Name = name;
         }
     }
 

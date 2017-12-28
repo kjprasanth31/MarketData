@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading;
+using System.Text;
 using NATS.Client;
 
 namespace Library.Nats
@@ -21,7 +22,7 @@ namespace Library.Nats
         {
             try
             {
-                _connection = new ConnectionFactory().CreateConnection(CreateClientOptions("Client2"));
+                _connection = new ConnectionFactory().CreateConnection(CreateClientOptions("Client"));
             }
             catch (Exception ex)
             {
@@ -67,36 +68,15 @@ namespace Library.Nats
             return opts;
         }
 
-        public IObservable<T> ObserveCurrencies()
+        public IObservable<T> ObserveCurrency(string pairTopic = "C.*")
         {
             var subject = new Subject<T>();
-
-            var c = _connection.SubscribeAsync("C.*", (sender, cbArgs) =>
+            _connection.SubscribeAsync(pairTopic, (sender, cbArgs) =>
             {
-                subject.OnNext(new T().Adapt(cbArgs.Message.Subject));
+                subject.OnNext(new T().Adapt(cbArgs.Message));
             });
-            c.Start();
-            return subject.AsObservable();
+            return subject.AsObservable().Replay().RefCount();
         }
-
-        public void REquest()
-        {
-            EventHandler<MsgHandlerEventArgs> msgHandler = (sender, cbArgs) =>
-            {
-                var l = cbArgs.Message;
-            };
-
-            using (IAsyncSubscription s = _connection.SubscribeAsync("C.*", msgHandler))
-            {
-                // Go ahead and keep a thread up for stressing the system a bit.
-                while (true)
-                {
-                    // always up
-                    Thread.Sleep(250);
-                }
-            }
-        }
-
         public void Disconnect()
         {
             _connection.Dispose();
@@ -105,14 +85,59 @@ namespace Library.Nats
 
     public interface INatAdapter<out T>
     {
-        T Adapt(string data);
+        T Adapt(Msg message);
     }
 
-    public class CurrencyPair : INatAdapter<CurrencyPair>
+    public class CurrencyPairPrice : CurrencyPair, INatAdapter<CurrencyPairPrice>, IEqualityComparer<CurrencyPairPrice>
+    {
+        public string AskPrice { get; }
+        public string BidPrice { get; }
+        public DateTime TimeStamp { get; }
+
+        public CurrencyPairPrice(string currency1, string currency2, string askPrice, string bidPrice, DateTime timeStamp)
+            : base(currency1, currency2)
+        {
+            AskPrice = askPrice;
+            BidPrice = bidPrice;
+            TimeStamp = timeStamp;
+        }
+
+        public CurrencyPairPrice()
+        {
+        }
+
+        public CurrencyPairPrice Adapt(Msg message)
+        {
+            var pair = message.Subject.Replace("C.", "").Split('/');
+            var fields = Encoding.UTF8.GetString(message.Data)
+                .Replace("{", "")
+                .Replace("}", "")
+                .Replace("\\", "")
+                .Replace("\"", "")
+                .Split(',');
+            return new CurrencyPairPrice(pair[0],
+                pair[1],
+                fields[1].Split(':')[1],
+                fields[2].Split(':')[1],
+               new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(Convert.ToInt64(fields[3].Split(':')[1])).ToLocalTime());
+        }
+
+
+        public bool Equals(CurrencyPairPrice x, CurrencyPairPrice y)
+        {
+            return base.Equals(x, y);
+        }
+
+        public int GetHashCode(CurrencyPairPrice pair)
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    public class CurrencyPair : IEqualityComparer<CurrencyPair>
     {
         public string Currency1 { get; }
         public string Currency2 { get; }
-
         public CurrencyPair(string currency1, string currency2)
         {
             Currency1 = currency1;
@@ -123,16 +148,21 @@ namespace Library.Nats
         {
         }
 
-        public CurrencyPair Adapt(string data)
-        {
-            var pair = data.Replace("C.", "").Split('/');
-
-            return new CurrencyPair(pair[0], pair[1]);
-        }
-
         public override string ToString()
         {
-            return this.Currency1 + "/" +  this.Currency2;
+            return this.Currency1 + "/" + this.Currency2;
+        }
+
+        public bool Equals(CurrencyPair x, CurrencyPair y)
+        {
+            if (x == null || y == null)
+                return false;
+            return x.ToString().Equals(y.ToString());
+        }
+
+        public int GetHashCode(CurrencyPair pair)
+        {
+            return pair.GetHashCode();
         }
     }
 }
