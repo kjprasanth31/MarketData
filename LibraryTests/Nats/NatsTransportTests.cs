@@ -35,7 +35,7 @@ namespace LibraryTests.Nats
                     System.Diagnostics.Debug.WriteLine("All   : " + x.ToString() + " " + x.AskPrice + " " + x.BidPrice + " " + x.TimeStamp);
                 }, () => System.Diagnostics.Debug.WriteLine("Completed"));
             _resetEvent.Wait(TimeSpan.FromMinutes(10));
-            _con.Disconnect();
+            _con.Dispose();
             Assert.IsTrue(true);
         }
     }
