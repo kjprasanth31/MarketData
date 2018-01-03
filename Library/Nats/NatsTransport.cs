@@ -7,7 +7,7 @@ using NATS.Client;
 
 namespace Library.Nats
 {
-    public class NatsTransport<T> where T : INatAdapter<T>, new()
+    public class NatsTransport<T> : IDisposable where T : INatAdapter<T>, new()
     {
         private readonly string [] _servers = 
             {
@@ -68,16 +68,20 @@ namespace Library.Nats
             return opts;
         }
 
-        public IObservable<T> ObserveCurrency(string pairTopic = "C.*")
+        public IObservable<T> ObserveCurrency(string pairTopic = "")
         {
             var subject = new Subject<T>();
-            _connection.SubscribeAsync(pairTopic, (sender, cbArgs) =>
+            const string allTopic = "C.*";
+            var topic = !string.IsNullOrEmpty(pairTopic) ? allTopic.Replace("*", pairTopic) : allTopic;
+
+            _connection.SubscribeAsync(topic, (sender, cbArgs) =>
             {
                 subject.OnNext(new T().Adapt(cbArgs.Message));
             });
             return subject.AsObservable().Replay().RefCount();
         }
-        public void Disconnect()
+
+        public void Dispose()
         {
             _connection.Dispose();
         }

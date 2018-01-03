@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
-using MarketDataController.Annotations;
 using LiveCharts;
 
 namespace MarketDataController
@@ -15,7 +13,7 @@ namespace MarketDataController
         private double _cpuUsage;
         private string _metric;
         private double _gaugeValue;
-        private SeriesCollection _seriesCollection;
+        private readonly SeriesCollection _seriesCollection;
         private bool _cpuVisibility;
         private bool _memoryVisilibity;
 
@@ -95,7 +93,7 @@ namespace MarketDataController
             }
         }
 
-        public SeriesCollection SeriesCollection { get { return _seriesCollection; } }
+        public SeriesCollection SeriesCollection => _seriesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -109,13 +107,13 @@ namespace MarketDataController
     {
         private MetricType _id;
         private string _name;
-        private readonly Func<IDisposable> _getData;
+        private readonly IObservable<double> _getData;
 
-        public AngularItem(MetricType id, string name, [CanBeNull] Func<IDisposable> getData)
+        public AngularItem(MetricType id, string name,  IObservable<double> getData)
         {
             _id = id;
             _name = name;
-            _getData = getData ?? (() => Disposable.Empty);
+            _getData = getData;
         }
 
         public MetricType Id
@@ -124,8 +122,7 @@ namespace MarketDataController
             set
             {
                 _id = value;
-                    NotifyPropertyChanged(nameof(Id));
-
+                NotifyPropertyChanged(nameof(Id));
             }
         }
         public string Name
@@ -135,11 +132,10 @@ namespace MarketDataController
             {
                 _name = value;
                 NotifyPropertyChanged(nameof(Name));
-
             }
         }
 
-        public Func<IDisposable> GetData => _getData;
+        public IObservable<double> GetData => _getData;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

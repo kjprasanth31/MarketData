@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
+using Library.Nats;
 using MarketDataController.Annotations;
 
 namespace MarketDataController
@@ -12,10 +10,11 @@ namespace MarketDataController
     public class FxViewModel : INotifyPropertyChanged
     {
         public CurrencyPairItemCollection CurrencyPairList { get; }
+        public CurrencyPairPriceItemCollection CurrencyPairPriceList { get; }
 
-        private string _selectedCurrencyPair;
+        private CurrencyPairItem _selectedCurrencyPair;
 
-        public string SelectedCurrencyPair
+        public CurrencyPairItem SelectedCurrencyPair
         {
             get => _selectedCurrencyPair;
             set
@@ -28,6 +27,7 @@ namespace MarketDataController
         public FxViewModel()
         {
             CurrencyPairList = new CurrencyPairItemCollection();
+            CurrencyPairPriceList = new CurrencyPairPriceItemCollection();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,6 +42,10 @@ namespace MarketDataController
     public class CurrencyPairItemCollection : ObservableCollection<CurrencyPairItem>
     {
     }
+    public class CurrencyPairPriceItemCollection : ObservableCollection<CurrencyPairPrice>
+    {
+    }
+
 
     public class CurrencyPairItem
     {
@@ -80,7 +84,6 @@ namespace MarketDataController
                 if (value != null)
                     _id = value;
             }
-
         }
 
         public string Currency1
@@ -90,7 +93,6 @@ namespace MarketDataController
             {
                 if (value != null)
                     _currency1 = value;
-
             }
         }
 

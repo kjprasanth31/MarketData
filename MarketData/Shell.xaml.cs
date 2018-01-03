@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using Prism.Commands;
 using Xceed.Wpf.AvalonDock;
 using Library.WindowHelper;
 using System.Windows;
+using Library.Extensions;
 using Library.Nats;
 using MarketData.GUI;
 using MarketDataController;
@@ -56,6 +58,7 @@ namespace MarketData
         private readonly XmlLayoutSerializer _layoutSerializer;
         private readonly Logger _logger;
 
+        private List<IDisposable> _disposable = new List<IDisposable>();
         public ShellController(DockingManager dockingManager)
         {
             _logger = LogManager.GetLogger(nameof(Shell));
@@ -120,6 +123,7 @@ namespace MarketData
 
         private void CloseWindow()
         {
+            _disposable.ForEach(x => x.Dispose());
             Application.Current.Shutdown();
         }
 
@@ -225,9 +229,13 @@ namespace MarketData
             {
                 case "FxControl":
                     var transport = new NatsTransport<CurrencyPairPrice>();
-                    return new FxViewController(transport).ViewModel;
+                    var fvc = new FxViewController(transport);
+                    _disposable.Add(fvc);
+                    return  fvc.ViewModel;
                 case "AngularGaugeControl":
-                    return new AngularGaugeViewController().ViewModel;
+                    var avc = new AngularGaugeViewController();
+                    _disposable.Add(avc);
+                    return avc.ViewModel;
 
                 default:
                     return default(object);
