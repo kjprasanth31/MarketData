@@ -3,57 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="FxControl">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*">
-            </ColumnDefinition>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*">
+                </ColumnDefinition>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <ComboBox x:Name="ComboBox" ItemsSource="{Binding CurrencyPairList}" HorizontalAlignment="Left" MinWidth="150" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedItem="{Binding SelectedCurrencyPair}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        </StackPanel>
-        
-        <DataGrid Name="FxDataGrid" 
-                  DockPanel.Dock="Left" 
-                  Grid.Row="1"
-                  Grid.Column="0" 
-                  AlternationCount="2" 
-                  CanUserReorderColumns="True"
-                  CanUserSortColumns="True"
-                  GridLinesVisibility="Horizontal"
-                  AutoGenerateColumns="False" 
-                  ItemsSource="{Binding CurrencyPairPriceList}">
-            <interactivity:Interaction.Behaviors>
-            </interactivity:Interaction.Behaviors>
-            <DataGrid.ContextMenu>
-                <ContextMenu >
-                    <MenuItem Header="Menu1" IsEnabled="False"/>
-                    <MenuItem Header="Menu2" IsEnabled="False"/>
-                    <MenuItem Header="Menu3" IsEnabled="False"/>
-                    <MenuItem Header="Menu4" IsEnabled="False"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="Pair" />-->
-                <DataGridTextColumn Header="Ask Price" Binding="{Binding AskPrice}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Bid Price" Binding="{Binding BidPrice}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeStamp}" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <ComboBox x:Name="CcyComboBox" ItemsSource="{Binding CurrencyPairList}" HorizontalAlignment="Left" MinWidth="150" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedItem="{Binding SelectedCurrencyPair}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Button x:Name="GraphButton" ToolTip="Graph" Width="Auto" Margin="5,0,0,0">
+                    <Image Source="line-chart.ico"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="{Binding ElementName=CcyComboBox, Path=Height}" Width="20" />
+                </Button>
+            </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <wpf:CartesianChart x:Name="FxCartesianChart" 
+                                VerticalContentAlignment="Stretch" 
+                                HorizontalContentAlignment="Left" 
+                                LegendLocation="Top"
+                                Grid.Column="0"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Width="Auto"
+                                Height="Auto" Zoom="Xy" Series="{Binding SeriesCollection}">
+            </wpf:CartesianChart>
+            <DataGrid Name="FxDataGrid"
+                      Grid.Column="1"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
+                      Width="Auto"
+                      Height="Auto"
+                      DockPanel.Dock="Left" 
+                      AlternationCount="2" 
+                      CanUserReorderColumns="True"
+                      CanUserSortColumns="True"
+                      GridLinesVisibility="Horizontal"
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding CurrencyPairPriceList}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="Menu1" IsEnabled="False"/>
+                        <MenuItem Header="Menu2" IsEnabled="False"/>
+                        <MenuItem Header="Menu3" IsEnabled="False"/>
+                        <MenuItem Header="Menu4" IsEnabled="False"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <!--<DataGridTextColumn Header="Pair" />-->
+                    <DataGridTextColumn Header="Ask Price" Binding="{Binding AskPrice}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Bid Price" Binding="{Binding BidPrice}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding TimeStamp}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
         <Expander Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="SlateGray" IsExpanded="false" DockPanel.Dock="Right" ExpandDirection="Left" >
-            <StackPanel Width="Auto">
-                <DataGrid Name="ColumnChooserDataGrid" 
+                <StackPanel Width="Auto">
+                    <DataGrid Name="ColumnChooserDataGrid" 
                             VerticalScrollBarVisibility="Auto"
                             AlternationCount="2" 
                             BorderThickness="0"
@@ -64,21 +85,21 @@
                             ItemsSource="{Binding ElementName=FxDataGrid, Path=Columns}" 
                             HorizontalAlignment="Center" 
                             VerticalContentAlignment="Stretch" >
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Select" Width="Auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <ItemContainerTemplate>
-                                    <CheckBox x:Name="SomeCheckBox" 
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Select" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <ItemContainerTemplate>
+                                        <CheckBox x:Name="SomeCheckBox" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 IsChecked="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=Item.Visibility, Converter={StaticResource  BooleanToVisibilityConverter}, FallbackValue=True}"/>
-                                </ItemContainerTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn IsReadOnly="True" Header="Field" Binding="{Binding  Header}" Width="Auto"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
-        </Expander>
-    </Grid>
+                                    </ItemContainerTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn IsReadOnly="True" Header="Field" Binding="{Binding  Header}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Expander>
+        </Grid>
 </UserControl>

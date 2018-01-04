@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Library.Nats;
+using LiveCharts;
+using LiveCharts.Wpf;
 using MarketDataController.Annotations;
 
 namespace MarketDataController
@@ -12,6 +15,7 @@ namespace MarketDataController
         public CurrencyPairItemCollection CurrencyPairList { get; }
         public CurrencyPairPriceItemCollection CurrencyPairPriceList { get; }
 
+        private readonly SeriesCollection _seriesCollection;
         private CurrencyPairItem _selectedCurrencyPair;
 
         public CurrencyPairItem SelectedCurrencyPair
@@ -24,11 +28,14 @@ namespace MarketDataController
             }
         }
 
-        public FxViewModel()
+        public FxViewModel(SeriesCollection seriesCollection)
         {
+            _seriesCollection = seriesCollection;
             CurrencyPairList = new CurrencyPairItemCollection();
             CurrencyPairPriceList = new CurrencyPairPriceItemCollection();
         }
+
+        public SeriesCollection SeriesCollection => _seriesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
