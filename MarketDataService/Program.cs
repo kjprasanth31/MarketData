@@ -14,14 +14,15 @@ namespace MarketDataService
 
         static void Main(string[] args)
         {
-
-            var connectionString = "";
+            var db = "";
+            var userName = ""
+            var passWd = ""
 
             var settings = new MongoClientSettings();
             settings.ConnectTimeout = TimeSpan.FromMinutes(2);
             settings.ConnectionMode = ConnectionMode.Automatic;
             settings.HeartbeatInterval = TimeSpan.FromSeconds(1);
-            settings.Credentials = new List<MongoCredential> {MongoCredential.CreatePlainCredential("MarketDataDB", "kjprasanth31", "lenovo31")};
+            settings.Credentials = new List<MongoCredential> {MongoCredential.CreatePlainCredential(db, userName, passWd)};
             settings.Servers = new List<MongoServerAddress>() {
                 new MongoServerAddress("cluster1-shard-00-00-rys2d.mongodb.net", 27017),
                 new MongoServerAddress("cluster1-shard-00-01-rys2d.mongodb.net", 27017),
