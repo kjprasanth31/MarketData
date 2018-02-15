@@ -15,7 +15,7 @@ namespace MarketDataService
         static void Main(string[] args)
         {
 
-            var connectionString = "mongodb://kjprasanth31:lenovo31@cluster1-shard-00-00-rys2d.mongodb.net:27017,cluster1-shard-00-01-rys2d.mongodb.net:27017,cluster1-shard-00-02-rys2d.mongodb.net:27017/test?ssl=true&replicaSet=Cluster1-shard-0&authSource=admin";
+            var connectionString = "";
 
             var settings = new MongoClientSettings();
             settings.ConnectTimeout = TimeSpan.FromMinutes(2);
