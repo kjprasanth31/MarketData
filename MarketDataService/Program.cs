@@ -15,8 +15,8 @@ namespace MarketDataService
         static void Main(string[] args)
         {
             var db = "";
-            var userName = ""
-            var passWd = ""
+            var userName = "";
+            var passWd = "";
 
             var settings = new MongoClientSettings();
             settings.ConnectTimeout = TimeSpan.FromMinutes(2);
