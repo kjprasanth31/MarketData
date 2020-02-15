@@ -1,0 +1,7 @@
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\outputService\bin\Debug\MarketDataService.exe.config
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\outputService\bin\Debug\MarketDataService.exe
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\outputService\bin\Debug\MarketDataService.pdb
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataService\obj\Debug\MarketDataService.csprojAssemblyReference.cache
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataService\obj\Debug\MarketDataService.csproj.CopyComplete
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataService\obj\Debug\MarketDataService.exe
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataService\obj\Debug\MarketDataService.pdb

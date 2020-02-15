@@ -43,7 +43,7 @@ namespace MarketData
             }
             else
             {
-                exception = new Exception("Add Xceed Toolkit license as argument \"xceedLicense=YourLicense\"");
+                exception = new Exception("Get a free trial license from https://xceed.com/ and add as argument \"xceedLicense=xxxxxxxxx\"");
             }
 
             if (exception == null)

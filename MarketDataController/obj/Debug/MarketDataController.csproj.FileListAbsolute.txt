@@ -1,0 +1,6 @@
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\output\bin\Debug\MarketDataController.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\output\bin\Debug\MarketDataController.pdb
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataController\obj\Debug\MarketDataController.csprojAssemblyReference.cache
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataController\obj\Debug\MarketDataController.csproj.CopyComplete
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataController\obj\Debug\MarketDataController.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketDataController\obj\Debug\MarketDataController.pdb

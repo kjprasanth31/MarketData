@@ -1,0 +1,12 @@
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\output\bin\Debug\MarketData.GUI.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\output\bin\Debug\MarketData.GUI.pdb
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI.csprojAssemblyReference.cache
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\FxView.baml
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\AngularGaugeView.baml
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\FxView.g.cs
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\AngularGaugeView.g.cs
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI_MarkupCompile.cache
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI.g.resources
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI.csproj.CopyComplete
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\MarketData.GUI\obj\Debug\MarketData.GUI.pdb

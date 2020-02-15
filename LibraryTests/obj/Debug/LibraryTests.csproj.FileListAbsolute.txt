@@ -1,0 +1,6 @@
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\test\bin\Debug\LibraryTests.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\test\bin\Debug\LibraryTests.pdb
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\LibraryTests\obj\Debug\LibraryTests.csprojAssemblyReference.cache
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\LibraryTests\obj\Debug\LibraryTests.csproj.CopyComplete
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\LibraryTests\obj\Debug\LibraryTests.dll
+C:\Users\Annah Cherian\Source\Repos\kjprasanth31\MarketData\LibraryTests\obj\Debug\LibraryTests.pdb
